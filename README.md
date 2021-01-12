@@ -14,6 +14,15 @@ ASP NET Core WEB API with CQRS Architecture.
 - docker-compose up
 - docker-compose down
 
+## How to run in Docker
+
+- docker-compose buid
+- docker-compose up
+- cd CqrsApi.Data
+- dotnet-ef database update
+- http://localhost:8000/swagger
+- enjoy
+
 ## To do
 
 - Encapsulate responses to entites
