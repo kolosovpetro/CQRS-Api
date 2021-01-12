@@ -13,12 +13,8 @@ COPY ["CqrsApi.Data/CqrsApi.Data.csproj", "CqrsApi.Data/"]
 COPY ["CqrsApi.Models/CqrsApi.Models.csproj", "CqrsApi.Models/"]
 RUN dotnet restore "CqrsApi.Core/CqrsApi.Core.csproj"
 COPY . .
-#WORKDIR "/src/CqrsApi.Core"
-#RUN dotnet build "CqrsApi.Core.csproj" -c Release -o /app/build
-
-ARG CONN_STR
-ENV ConnectionStrings__DB_CONNECTION_STRING=${CONN_STR}
-RUN export PATH="$PATH:/root/.dotnet/tools" && dotnet tool install --global dotnet-ef && cd /src/CqrsApi.Core && dotnet build "CqrsApi.Core.csproj" -c Release -o /app/build && cd ../src/CqrsApi.Data && dotnet ef database update --context PostgreContext && cd ../src/CqrsApi.Core
+WORKDIR "/src/CqrsApi.Core"
+RUN dotnet build "CqrsApi.Core.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "CqrsApi.Core.csproj" -c Release -o /app/publish

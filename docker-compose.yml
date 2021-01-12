@@ -2,10 +2,11 @@ version: '3.4'
 
 networks:
   cqrs-api-docker-postgres-dev:
-    driver: bridge 
+    driver: bridge
 
 services:
   cqrs-api-docker-postgres-dev:
+    container_name: cqrs_api_postgres
     image: cqrs-api-docker-postgres-dev:latest
     depends_on:
       - "postgres_image"
@@ -15,14 +16,15 @@ services:
     ports:
       - "8000:80"     
     environment:
-      DB_CONNECTION_STRING: "host=postgres_image;port=5432;database=CqrsApiDatabase;username=postgres;password=postgres"
+      DB_CONNECTION_STRING: "host=postgres_db;port=5432;database=CqrsApiDatabase;username=postgres;password=postgres"
     networks:
       - cqrs-api-docker-postgres-dev  
   
   postgres_image:
+    container_name: postgres_db
     image: postgres:latest
     ports:
-      - "5432"
+      - "6000:5432"
     restart: always
     environment:
       POSTGRES_USER: "postgres"

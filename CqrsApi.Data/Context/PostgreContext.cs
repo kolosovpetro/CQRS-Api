@@ -26,9 +26,9 @@ namespace CqrsApi.Data.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
+                // this is only for manual migration to docker postgres container
                 optionsBuilder.UseNpgsql(
-                    //"Server=ec2-52-203-165-126.compute-1.amazonaws.com;User Id=psajiwtsuypith;Password=fd3e5f4a7c04871450bc608bb8451d00f63f654563a788df7ddfb0686679cc17;Database=deglced74b0i79;sslmode=Require;Trust Server Certificate=true;"
-                    "Server=localhost;User Id=postgres;Password=postgres;Database=ApiDatabase;"
+                    "Server=localhost;Port=6000;User Id=postgres;Password=postgres;Database=CqrsApiDatabase;"
                 );
             }
         }

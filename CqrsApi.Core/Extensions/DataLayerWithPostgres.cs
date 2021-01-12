@@ -1,5 +1,4 @@
 ﻿using System;
-using CqrsApi.Core.Services;
 using CqrsApi.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,11 +11,13 @@ namespace CqrsApi.Core.Extensions
         public static IServiceCollection AddDataLayerWithPostgreSql(this IServiceCollection services,
             IConfiguration configuration)
         {
-            var environmentConnectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var environmentConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 
             services.AddDbContext<PostgreContext>(options =>
                 options.UseNpgsql(
-                    StringParser.Convert(environmentConnectionString) ??
+                    // this is commented since it is used in heroku to parse string
+                    //StringParser.Convert(environmentConnectionString) ??
+                    environmentConnectionString ??
                     configuration.GetConnectionString("LOCAL_POSTGRES_CONNECTION_STRING")));
 
             services.AddTransient<DbContext, PostgreContext>();
