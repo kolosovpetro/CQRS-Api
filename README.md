@@ -6,6 +6,13 @@ ASP NET Core WEB API with CQRS Architecture.
 
 - Github: https://github.com/kolosovpetro/CQRS-Api
 - Heroku: https://cqrs-movies-api.herokuapp.com/swagger
+- Docker: http://localhost:8000/swagger
+
+## Docker commands
+
+- docker-compose build
+- docker-compose up
+- docker-compose down
 
 ## To do
 
