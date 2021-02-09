@@ -19,8 +19,8 @@ namespace CqrsApi.Requests.CommandHandlers
 
         public async Task<DeleteMovieSuccessResponse> Handle(DeleteMovieCommand request, CancellationToken cancellationToken)
         {
-            var movie = await _context.Movies.FirstOrDefaultAsync(x => x.MovieId == request.MovieId,
-                cancellationToken);
+            var movie = await _context.Movies
+                .FirstOrDefaultAsync(x => x.MovieId == request.MovieId, cancellationToken);
             if (movie == null)
                 return null;
             _context.Movies.Remove(movie);

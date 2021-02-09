@@ -79,6 +79,9 @@ namespace CqrsApi.Core.Controllers
             if (command.AgeRestriction <= 0)
                 return BadRequest(new InvalidAgeRestrictionResponse());
 
+            if (string.IsNullOrEmpty(command.Title) || string.IsNullOrWhiteSpace(command.Title))
+                return BadRequest(new InvalidTitleResponse());
+
             var response = await _mediator.Send(command);
             return Ok(response);
         }
@@ -93,8 +96,21 @@ namespace CqrsApi.Core.Controllers
             var model = await _mediator.Send(new GetMovieByIdQuery(command.MovieId));
             if (model.Title.Contains("F#"))
                 return BadRequest("F# best language");
-            if (command.MovieId < 0)
+
+            if (command.MovieId <= 0)
                 return BadRequest(new InvalidIdResponse());
+            
+            if (command.Year < 1888)
+                return BadRequest(new InvalidYearResponse());
+
+            if (command.Price <= 0)
+                return BadRequest(new InvalidPriceResponse());
+
+            if (command.AgeRestriction <= 0)
+                return BadRequest(new InvalidAgeRestrictionResponse());
+            
+            if (string.IsNullOrEmpty(command.Title) || string.IsNullOrWhiteSpace(command.Title))
+                return BadRequest(new InvalidTitleResponse());
 
             var response = await _mediator.Send(command);
 
@@ -114,7 +130,7 @@ namespace CqrsApi.Core.Controllers
             var model = await _mediator.Send(new GetMovieByIdQuery(id));
             if (model.Title.Contains("F#"))
                 return BadRequest("F# best language");
-            
+
             var command = new DeleteMovieCommand(id);
             var response = await _mediator.Send(command);
             if (response == null)
